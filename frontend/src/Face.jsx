@@ -19,77 +19,19 @@ import "./components/style.css";
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
-
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 'Please write an essay about your favorite DOM element.'
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
-
-  render() {
-    return (
-        <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="login" placeholder="ФИО" name="login"/>
-          </Form.Group>
-    
-          <Button variant="secondary" type="submit" name="presence" value="{{dieTime}}">
-            Submit
-          </Button>
-        </Form>
-    );
-  }
-}
-
-function Toggle({ toggled, onClick }) {
-  return (
-      <div onClick={onClick} className={`toggle${toggled ? " night" : ""}`}>
-          <div className="notch">
-              <div className="crater" />
-              <div className="crater" />
-          </div>
-          <div>
-              <div className="shape sm" />
-              <div className="shape sm" />
-              <div className="shape md" />
-              <div className="shape lg" />
-          </div>
-      </div>
-  );
-}
-
-var eventsHistory = [];
-var prevState = false;
+import axios from 'axios';
+import Toggle from "./components/Toggle";
 
 function Face() {
+
+  const videoRef = useRef(null);
   const webcamRef = useRef(null);
   const cameraRef = useRef(null);
   const canvasRef = useRef(null);
   const faceMeshRef = useRef(null);
-  const incrementRef = useRef(null);
   const [aiEnabled, setAiEnabled] = useState(false);
   const [draww, setDraww] = useState(false);
-  const [timer, setTimer] = useState(0);
-  var time_over = false;
   var person_exists = false;
-  var date_person_here = new Date();
-  var time_person_left = 0;
-  const [timePersonLeft, setTimePersonLeft] = useState(0);
-  const [dieTime, setDieTime] = useState(5);
   const [check, setCheck] = useState("disabled");
 
   const handleStart = () => {
@@ -100,43 +42,44 @@ function Face() {
     setDraww((draww) => !draww);
   }
 
-  function inc(time_elapsed) {
-    setTimePersonLeft(timePersonLeft + time_elapsed)
-  }
-  function dec(time_elapsed) {
-    setDieTime(dieTime - time_elapsed)
 
-  }
-  function nul(a) {
-    if (a) {
-      setTimePersonLeft(0);
+  const [imageSent, setImageSent] = useState(false);
+  const captureImage = async () => {
+    // Создаем снимок экрана
+    
+    const videoElement = webcamRef.current.video;
+    const canvasElement = canvasRef.current;
+    canvasElement.width = videoElement.videoWidth;
+    canvasElement.height = videoElement.videoHeight;
+    const ctx = canvasElement.getContext('2d');
+    ctx.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight);
+  
+    // Получаем данные с Canvas в формате base64
+    const imageData = canvasElement.toDataURL('image/jpeg');
+    
+    axios.post('https://jsonplaceholder.typicode.com/posts', {image: imageData})
+    .then(response => {
+      const data= response
+      console.log(data)
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 
-    }
-  }
-
+  };
 
 
   function checking(person_detected) {
-    person_detected ? setCheck("✅") : setCheck("❌"); 
-    if (dieTime <= 0){
-      setDieTime("Time Over...")
-    }
+    person_detected 
+    ? setCheck("✅")
+    : setCheck("❌"); 
+    
   }
 
-  const formatTime = (timers) => {
-    const getSeconds = `0${(timers % 60)}`.slice(-2)
-    const minutes = `${Math.floor(timers / 60)}`
-    const getMinutes = `0${minutes % 60}`.slice(-2)
-    const getHours = `0${Math.floor(timers / 3600)}`.slice(-2)
-
-    return `${getHours} : ${getMinutes} : ${getSeconds}`
-  }
-
-  function msToSec(duration) {
-    var milliseconds = Math.floor((duration % 1000) / 100),
-      seconds = Math.floor((duration / 1000) % 60)
-    return seconds;
-  }
+useEffect(()=>{
+    if (check=="✅")
+    captureImage()
+},[check])
 
   useEffect(() => {
     const onResults = (results) => {
@@ -161,10 +104,7 @@ function Face() {
 
       if (results.multiFaceLandmarks && aiEnabled) {
         if (results.multiFaceLandmarks.length) {
-          if (!prevState) {
-            prevState = !prevState;
-            eventsHistory.push(new Date());
-          }
+          
           person_exists = true;
           if (draww) {
             for (const landmarks of results.multiFaceLandmarks) {
@@ -179,27 +119,16 @@ function Face() {
               drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, { color: '#E0E0E0' });
             }
           }
-          // console.log(draww)
-          setTimePersonLeft(0);
-          date_person_here = new Date();
+        //   console.log(draww)
+          
         } else {
-          time_person_left = new Date() - date_person_here
+          
           person_exists = false;
 
-          if (prevState) {
-            prevState = !prevState;
-            eventsHistory.push(new Date());
-            for (const date of eventsHistory) {
-              console.log(date)
-            }
-            console.log(" ");
-          }
+         
 
         }
-        inc(msToSec(time_person_left));
-        dec(msToSec(time_person_left));
         checking(person_exists);
-        nul(person_exists);
 
 
       }
@@ -301,15 +230,13 @@ function Face() {
         <Webcam 
           ref={webcamRef} 
           style={{ 
-            margin: "auto", 
             position: "static", 
-
-            marginTop: 40, 
+            
             left: 0, 
             right: 0, 
             opacity: 100, 
             textAlign: "center", 
-            zIndex: 9, 
+            zIndex: 0, 
             width: 960, 
             height: 720, 
             borderRadius: 10, 
@@ -319,8 +246,7 @@ function Face() {
           ref={canvasRef} 
           className="output_canvas" 
           style={{ 
-            margin: "auto", 
-            position: "absolut", 
+            position: "static", 
  
             marginTop: -1000, 
             marginBottom: 22,
@@ -342,22 +268,39 @@ function Face() {
           { 
             display: "flex", 
             justifyContent: "space-evenly", 
+            width: "960px",
+            margin:"auto",
             marginTop: "10px", 
             marginBottom: "10px" 
           } 
         }> 
           <Button variant="dark" style={{ 
-            fontSize: '40px', width: 300, 
-          }} onClick={handleStart}>Start</Button> 
- 
-          <div 
+            fontSize: '40px', width: 300,
+          }} onClick={handleStart}>
+            {check=="✅"
+            ?'Stop'
+            :'Start'
+            }
+            </Button> 
+            <div 
             style={{ 
               display: "flex", 
+              margin:'auto',
+            
               fontSize: '30px', 
               alignItems: "center" 
             }} 
           > 
-            
+          </div> 
+          <div 
+            style={{ 
+              display: "flex", 
+              
+              fontSize: '30px', 
+              alignItems: "center" 
+            }} 
+          > 
+            Маска &nbsp;
               <Toggle toggled={draww} onClick={changeDraw} /> 
           </div> 
         </div>

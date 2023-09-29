@@ -4,14 +4,20 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Face from './Face'
 
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [check, setCheck] = useState(false)
 
   return (
-    <>
-        <Face/>
+    <div >
+       <div>
+       <input id="check" type="checkbox" onChange={(e)=>setCheck(e.target.checked)} /> 
+        <label for="check">Распознавание с камеры</label>
+      </div>
+       
+        {check&& <Face/>}
      
-    </>
+    </div>
   )
 }
 

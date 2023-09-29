@@ -3,13 +3,13 @@
     width: 200px;
     border-radius: 50px;
     margin: auto;
-    background-image: linear-gradient( rgb(10, 53, 6), rgb(0, 0, 0));
+    background-image: linear-gradient( rgb(8, 6, 53), rgb(0, 0, 0));
     position: relative;
     cursor: pointer;
 }
 
 .toggle.night { 
-    background-image: linear-gradient(rgb(0, 0, 0), rgb(10, 53, 6));
+    background-image: linear-gradient(rgb(0, 0, 0), rgb(8, 6, 53));
 }
 
 .notch {
