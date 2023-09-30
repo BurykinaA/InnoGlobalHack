@@ -41,7 +41,7 @@ function App() {
  
   return (
     
-    <div className='w-[96%] text-white mx-auto p-2 '>
+    <div className='w-[96%]  mx-auto p-2 '>
       <div className="flex items-center my-3 gap-2">
       <FileInput
         className='w-full mr-5'
@@ -52,13 +52,13 @@ function App() {
           id="accept"
           onChange={(e)=>setCheck(e.target.checked)}
         />
-        <Label
-          className="flex min-w-max text-white text-2xl"
+        <label
+          className="flex min-w-max dark:text-white text-2xl"
           htmlFor="agree"
         >
             Использовать камеру
         
-        </Label>
+        </label>
         
       </div>
       

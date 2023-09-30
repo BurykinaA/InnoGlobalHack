@@ -220,7 +220,7 @@ useEffect(()=>{
       <div className="mirror flex"> 
         <Webcam 
           ref={webcamRef} 
-          className="fixed inset-x-0  rounded-lg m-auto w-[960px] "
+          className="absolute inset-x-0  rounded-lg m-auto w-[960px] "
           
         /> 
         <canvas 
@@ -232,12 +232,12 @@ useEffect(()=>{
       <div
         className="flex mx-auto  pt-5"
        > 
-        <Button variant="light" className="w-[300px] bg-gray-950 text-4xl" onClick={handleStart}>
+        <button className="w-[300px] rounded-xl  text-4xl" onClick={handleStart}>
           {check=="✅"
             ?'Stop'
             :'Start'
           }
-        </Button> 
+        </button> 
         <div  className="flex m-auto max-w-max items-center" > 
          
               <a>{check}</a> 
