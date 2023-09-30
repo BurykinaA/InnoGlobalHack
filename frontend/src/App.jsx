@@ -4,12 +4,18 @@ import './App.css'
 import Face from './Face';
 import { FileInput, Checkbox, Label } from 'flowbite-react';
 import axios from 'axios';
+import { PictureContext } from './context/context';
 
 
 
 
 function App() {
   const [check, setCheck] = useState(false)
+  const [picture, setPicture] = useState('')
+  useEffect(()=>{
+    setPicture(localStorage.getItem('response'))
+  },[])
+
 
   const handlePost =  (event) => {
     const selectedFile = event.target.files[0];
@@ -26,8 +32,10 @@ function App() {
             image: base64Image,
           })
           .then(response => {
-            const data= response
-            console.log(data)
+            const data= response.data
+            localStorage.setItem('response', data.image)
+            setPicture(data.image)
+            // console.log(data.id)
           })
           .catch(error => {
               console.error('Error:', error);
@@ -40,9 +48,9 @@ function App() {
   };
  
   return (
-    
-    <div className='w-[96%]  mx-auto p-2 '>
-      <div className="flex items-center my-3 gap-2">
+    <PictureContext.Provider value={{picture, setPicture}}>
+<div className='w-[96%]  mx-auto p-2 '>
+      <div className="flex items-center my-3 ">
       <FileInput
         className='w-full mr-5'
           id="file"
@@ -59,11 +67,13 @@ function App() {
             Использовать камеру
         
         </label>
-        
+        <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/>
       </div>
       
       {check&& <Face/>}
   </div>
+    </PictureContext.Provider>
+    
   )
 }
 
