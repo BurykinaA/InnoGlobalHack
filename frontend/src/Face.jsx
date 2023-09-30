@@ -25,6 +25,7 @@ import Toggle from "./components/Toggle";
 import { PictureContext } from "./context/context";
 
 function Face() {
+    const URL= 'http://127.0.0.1:5000'
     const {picture, setPicture}= useContext(PictureContext)
   const videoRef = useRef(null);
   const webcamRef = useRef(null);
@@ -58,17 +59,21 @@ function Face() {
   
     // Получаем данные с Canvas в формате base64
     const imageData = canvasElement.toDataURL('image/jpeg');
-    
-    axios.post('https://jsonplaceholder.typicode.com/posts', {image: imageData})
-    .then(response => {
-      const data= response.data
-      localStorage.setItem('response', data.image)
-      setPicture(data.image)
-      console.log(data)
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    axios.post(URL+'/api/photo', {
+            photo: imageData,
+          })
+          .then(response => {
+            const data= response.data
+            localStorage.setItem('response', data.corection)
+            setPicture(data.corection)
+            // console.log(data.id)
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+        
+      
+   
 
   };
 

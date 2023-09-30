@@ -28,8 +28,8 @@ function App() {
           const base64Image = e.target.result;
 
           // Выполните POST-запрос на сервер, отправив изображение в формате base64
-          axios.post(URL+'/api/correct', {
-            search: 'base64Image',
+          axios.post(URL+'/api/photo', {
+            photo: base64Image,
           })
           .then(response => {
             const data= response.data
