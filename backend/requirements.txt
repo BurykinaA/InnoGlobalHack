@@ -1,0 +1,4 @@
+flask
+requests
+flask-cors
+facenet-pytorch==2.5.2
