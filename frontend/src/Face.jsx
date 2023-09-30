@@ -10,7 +10,7 @@ import {
   FACEMESH_LIPS,
   FACEMESH_TESSELATION,
 } from "@mediapipe/face_mesh";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import * as cam from "@mediapipe/camera_utils";
 import { drawConnectors } from "@mediapipe/drawing_utils";
 import Webcam from "react-webcam";
@@ -22,15 +22,16 @@ import Button from 'react-bootstrap/Button';
 import { ToggleSwitch } from 'flowbite-react';
 import axios from 'axios';
 import Toggle from "./components/Toggle";
+import { PictureContext } from "./context/context";
 
 function Face() {
-
+    const {picture, setPicture}= useContext(PictureContext)
   const videoRef = useRef(null);
   const webcamRef = useRef(null);
   const cameraRef = useRef(null);
   const canvasRef = useRef(null);
   const faceMeshRef = useRef(null);
-  const [aiEnabled, setAiEnabled] = useState(false);
+  const [aiEnabled, setAiEnabled] = useState(true);
   const [draww, setDraww] = useState(false);
   var person_exists = false;
   const [check, setCheck] = useState("disabled");
@@ -60,7 +61,9 @@ function Face() {
     
     axios.post('https://jsonplaceholder.typicode.com/posts', {image: imageData})
     .then(response => {
-      const data= response
+      const data= response.data
+      localStorage.setItem('response', data.image)
+      setPicture(data.image)
       console.log(data)
     })
     .catch(error => {
@@ -213,14 +216,14 @@ useEffect(()=>{
 
   return ( 
     <div className="w-[960px] m-auto mt-10"> 
-    
+        При обнаружении лица на бек отправляется один кадр, не видеопоток.
     
       
  
       <div className="mirror flex"> 
         <Webcam 
           ref={webcamRef} 
-          className="fixed inset-x-0  rounded-lg m-auto w-[960px] "
+          className="absolute inset-x-0  rounded-lg m-auto w-[960px] "
           
         /> 
         <canvas 
@@ -232,12 +235,12 @@ useEffect(()=>{
       <div
         className="flex mx-auto  pt-5"
        > 
-        <Button variant="light" className="w-[300px] bg-gray-950 text-4xl" onClick={handleStart}>
+        <button className="w-[300px] rounded-xl  text-4xl" onClick={handleStart}>
           {check=="✅"
             ?'Stop'
             :'Start'
           }
-        </Button> 
+        </button> 
         <div  className="flex m-auto max-w-max items-center" > 
          
               <a>{check}</a> 
