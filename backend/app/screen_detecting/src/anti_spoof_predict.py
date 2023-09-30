@@ -25,10 +25,17 @@ MODEL_MAPPING = {
 
 class Detection:
     def __init__(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        deploy = "resources\detection_model\deploy.prototxt"
+        absolute_path_deploy  = os.path.join(current_dir, deploy)
+
+        
         # deploy = 'backend/app/screen_detecting/resources/detection_model/deploy.prototxt'
-        # caffemodel = 'backend/app/screen_detecting/resources/detection_model/Widerface-RetinaFace.caffemodel'
-        deploy = './resources/detection_model/deploy.prototxt'
-        caffemodel = './resources/detection_model/Widerface-RetinaFace.caffemodel'
+        # caffemodel = r'D:\InnoHack\InnoGlobalHack\backend\app\screen_detecting\resources\detection_model\Widerface-RetinaFace.caffemodel'
+        # deploy = r'D:\InnoHack\InnoGlobalHack\backend\app\screen_detecting\resources\detection_model\deploy.prototxt'
+        
+        caffemodel = 'resources\detection_model\Widerface-RetinaFace.caffemodel'
+        absolute_path_caffemodel = os.path.join(current_dir, caffemodel)
 
         self.detector = cv2.dnn.readNetFromCaffe(deploy, caffemodel)
         self.detector_confidence = 0.6
