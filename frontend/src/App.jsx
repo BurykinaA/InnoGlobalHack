@@ -1,9 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import React from 'react';
 import './App.css'
+import Face from './Face';
+import { FileInput, Checkbox, Label } from 'flowbite-react';
 import axios from 'axios';
-import Face from './Face'
+
+
 
 
 function App() {
@@ -37,25 +39,31 @@ function App() {
     }
   };
  
-
   return (
-    <div >
-      
-       <div className='nav'>
-       <div class="checkbox-rect">
-        <input type="checkbox" id="checkbox-rect1" name="check" onChange={(e)=>setCheck(e.target.checked)}/>
-        <label for="checkbox-rect1">Распознавание с камеры</label>
+    
+    <div className='w-[96%] text-white mx-auto p-2 '>
+      <div className="flex items-center my-3 gap-2">
+      <FileInput
+        className='w-full mr-5'
+          id="file"
+          onChange={handlePost}
+        />
+        <Checkbox
+          id="accept"
+          onChange={(e)=>setCheck(e.target.checked)}
+        />
+        <Label
+          className="flex min-w-max text-white text-2xl"
+          htmlFor="agree"
+        >
+            Использовать камеру
+        
+        </Label>
+        
       </div>
-      <input id="file" type="file" onChange={handlePost} /> 
-      </div>
       
-      
-   
-     
-
-        {check&& <Face/>}
-     
-    </div>
+      {check&& <Face/>}
+  </div>
   )
 }
 

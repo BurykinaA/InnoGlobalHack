@@ -18,7 +18,8 @@ import './App.css';
 import "./components/style.css";
 
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+
+import { ToggleSwitch } from 'flowbite-react';
 import axios from 'axios';
 import Toggle from "./components/Toggle";
 
@@ -211,99 +212,47 @@ useEffect(()=>{
   }, [])
 
   return ( 
-    <div className=""> 
+    <div className="w-[960px] m-auto mt-10"> 
     
     
-      <table className="table2" > 
-        <tbody> 
-          
-          <tr> 
-            
-            <td className="td1"> 
-              <a>{check}</a> 
-            </td> 
-          </tr> 
-        </tbody> 
-      </table> 
+      
  
-      <div className="mirror"> 
+      <div className="mirror flex"> 
         <Webcam 
           ref={webcamRef} 
-          style={{ 
-            position: "static", 
-            
-            left: 0, 
-            right: 0, 
-            opacity: 100, 
-            textAlign: "center", 
-            zIndex: 0, 
-            width: 960, 
-            height: 720, 
-            borderRadius: 10, 
-          }} 
+          className="fixed inset-x-0  rounded-lg m-auto w-[960px] "
+          
         /> 
         <canvas 
           ref={canvasRef} 
-          className="output_canvas" 
-          style={{ 
-            position: "static", 
- 
-            marginTop: -1000, 
-            marginBottom: 22,
-            left: 0, 
-            right: 0, 
-            opacity: 100, 
-            textAlign: "center", 
-            zIndex: 9, 
-            width: 960, 
-            height: 720, 
-            borderRadius: 10, 
-          }} 
+          className="output_canvas m-auto relative rounded-lg w-[960px] h-[720px] " 
         /> 
- 
- 
       </div> 
  
-      <div style={ 
-          { 
-            display: "flex", 
-            justifyContent: "space-evenly", 
-            width: "960px",
-            margin:"auto",
-            marginTop: "10px", 
-            marginBottom: "10px" 
-          } 
-        }> 
-          <Button variant="dark" style={{ 
-            fontSize: '40px', width: 300,
-          }} onClick={handleStart}>
-            {check=="✅"
+      <div
+        className="flex mx-auto  pt-5"
+       > 
+        <Button variant="light" className="w-[300px] bg-gray-950 text-4xl" onClick={handleStart}>
+          {check=="✅"
             ?'Stop'
             :'Start'
-            }
-            </Button> 
-            <div 
-            style={{ 
-              display: "flex", 
-              margin:'auto',
-            
-              fontSize: '30px', 
-              alignItems: "center" 
-            }} 
-          > 
-          </div> 
-          <div 
-            style={{ 
-              display: "flex", 
-              
-              fontSize: '30px', 
-              alignItems: "center" 
-            }} 
-          > 
-            Маска &nbsp;
-              <Toggle toggled={draww} onClick={changeDraw} /> 
-          </div> 
-        </div>
+          }
+        </Button> 
+        <div  className="flex m-auto max-w-max items-center" > 
+         
+              <a>{check}</a> 
+           
+        </div> <div className="flex w-[320px] h-[100px] text-4xl items-center" > 
+        {aiEnabled&&
+        <>
+        Маска &nbsp;
+        <Toggle toggled={draww} onClick={changeDraw} /> 
+        </>
+        
+     
+        }
+         </div> 
+      </div>
         {/* <LoginForm></LoginForm> */}
         
         
