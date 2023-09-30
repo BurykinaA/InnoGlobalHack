@@ -1,15 +1,13 @@
 from flask import Flask , request , make_response
 from config import Config
-from app.products import products 
-from app.categories import categories
-from app.correct import correct
+from app.photo import photo
 from flask_cors import CORS, cross_origin
 
 def create_app(config_class=Config):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_class)
 
-    blueprints = [products, categories, correct]
+    blueprints = [photo] #products, categories, correct
     for blueprint in blueprints:
         app.register_blueprint(blueprint)
     

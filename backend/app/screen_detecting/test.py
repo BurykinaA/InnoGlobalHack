@@ -4,29 +4,27 @@ import numpy as np
 import warnings
 import time
 
-from src.anti_spoof_predict import AntiSpoofPredict
-from src.generate_patches import CropImage
-from src.utility import parse_model_name
+from ..screen_detecting.src.anti_spoof_predict import AntiSpoofPredict
+from ..screen_detecting.src.generate_patches import CropImage
+from ..screen_detecting.src.utility import parse_model_name
 warnings.filterwarnings('ignore')
 
 
 SAMPLE_IMAGE_PATH = "./images/sample/"
 
 
-# ?????APK??????????3:4,????????????????3:4
 def check_image(image):
     height, width, channel = image.shape
     if width/height != 3/4:
-        print("Image is not appropriate!!!\nHeight/Width should be 4/3.")
         return False
     else:
         return True
 
 
-def test(image_name, model_dir, device_id):
+def test(numpy_array, model_dir, device_id):
     model_test = AntiSpoofPredict(device_id)
     image_cropper = CropImage()
-    image = cv2.imread(SAMPLE_IMAGE_PATH + image_name)
+    image = cv2.cvtColor(numpy_array, cv2.COLOR_RGB2BGR)
     result = check_image(image)
     if result is False:
         height, width, channel = image.shape
@@ -59,30 +57,6 @@ def test(image_name, model_dir, device_id):
     # draw result of prediction
     label = np.argmax(prediction)
     return label
-    # value = prediction[0][label]/2
-    # if label == 1:
-    #     print("Image '{}' is Real Face. Score: {:.2f}.".format(image_name, value))
-    #     result_text = "RealFace Score: {:.2f}".format(value)
-    #     color = (255, 0, 0)
-    # else:
-    #     print("Image '{}' is Fake Face. Score: {:.2f}.".format(image_name, value))
-    #     result_text = "FakeFace Score: {:.2f}".format(value)
-    #     color = (0, 0, 255)
-    # print("Prediction cost {:.2f} s".format(test_speed))
-    # cv2.rectangle(
-    #     image,
-    #     (image_bbox[0], image_bbox[1]),
-    #     (image_bbox[0] + image_bbox[2], image_bbox[1] + image_bbox[3]),
-    #     color, 2)
-    # cv2.putText(
-    #     image,
-    #     result_text,
-    #     (image_bbox[0], image_bbox[1] - 5),
-    #     cv2.FONT_HERSHEY_COMPLEX, 0.5*image.shape[0]/1024, color)
-
-    # format_ = os.path.splitext(image_name)[-1]
-    # result_image_name = image_name.replace(format_, "_result" + format_)
-    # cv2.imwrite(SAMPLE_IMAGE_PATH + result_image_name, image)
 
 
 def get_sreenshot(img):
@@ -90,4 +64,4 @@ def get_sreenshot(img):
     1 - real
     0 - fake
     """
-    return test(img, 'resources/anti_spoof_models', 0)
+    return test(img, 'D:/InnoHack/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models', 0)

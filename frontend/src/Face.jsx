@@ -43,7 +43,7 @@ function Face() {
   const changeDraw = () => {
     setDraww((draww) => !draww);
   }
-
+  const URL= 'http://127.0.0.1:5000'
 
   const [imageSent, setImageSent] = useState(false);
   const captureImage = async () => {
@@ -59,12 +59,14 @@ function Face() {
     // Получаем данные с Canvas в формате base64
     const imageData = canvasElement.toDataURL('image/jpeg');
     
-    axios.post('https://jsonplaceholder.typicode.com/posts', {image: imageData})
+    axios.post(URL+'/api/photo', {
+      'photo': imageData,
+    })
     .then(response => {
       const data= response.data
-      localStorage.setItem('response', data.image)
-      setPicture(data.image)
-      console.log(data)
+      localStorage.setItem('response', data.photo)
+      setPicture(data.photo)
+      // console.log(data.id)
     })
     .catch(error => {
         console.error('Error:', error);

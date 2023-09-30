@@ -15,7 +15,7 @@ function App() {
   useEffect(()=>{
     setPicture(localStorage.getItem('response'))
   },[])
-
+  const URL= 'http://127.0.0.1:5000'
 
   const handlePost =  (event) => {
     const selectedFile = event.target.files[0];
@@ -28,13 +28,13 @@ function App() {
           const base64Image = e.target.result;
 
           // Выполните POST-запрос на сервер, отправив изображение в формате base64
-          axios.post('https://jsonplaceholder.typicode.com/posts', {
-            image: base64Image,
+          axios.post(URL+'/api/photo', {
+            'photo': base64Image,
           })
           .then(response => {
             const data= response.data
-            localStorage.setItem('response', data.image)
-            setPicture(data.image)
+            localStorage.setItem('response', data.photo)
+            setPicture(data.photo)
             // console.log(data.id)
           })
           .catch(error => {
@@ -67,7 +67,8 @@ function App() {
             Использовать камеру
         
         </label>
-        <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/>
+        <p className='mx-2'> {picture}</p>
+        {/* <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/> */}
       </div>
       
       {check&& <Face/>}

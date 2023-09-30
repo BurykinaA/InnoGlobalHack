@@ -1,5 +1,5 @@
 import torch
-import facenet_pytorch
+# import facenet_pytorch
 import yaml
 from PIL import Image
 from facenet_pytorch import MTCNN, InceptionResnetV1
@@ -12,6 +12,7 @@ from torchvision import transforms
 
 # # Создаем экземпляр MTCNN
 mtcnn = MTCNN(margin=20, thresholds=[0.6, 0.6, 0.6], keep_all=True, post_process=False, device='cpu')
+
 
 def get_numbers(img):
     image = Image.open(img) #plt.imread()
