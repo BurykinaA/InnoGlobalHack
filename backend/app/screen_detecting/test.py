@@ -7,7 +7,8 @@ import time
 from ..screen_detecting.src.anti_spoof_predict import AntiSpoofPredict
 from ..screen_detecting.src.generate_patches import CropImage
 from ..screen_detecting.src.utility import parse_model_name
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 
 SAMPLE_IMAGE_PATH = "./images/sample/"
@@ -15,7 +16,7 @@ SAMPLE_IMAGE_PATH = "./images/sample/"
 
 def check_image(image):
     height, width, channel = image.shape
-    if width/height != 3/4:
+    if width / height != 3 / 4:
         return False
     else:
         return True
@@ -28,10 +29,10 @@ def test(numpy_array, model_dir, device_id):
     result = check_image(image)
     if result is False:
         height, width, channel = image.shape
-        new_width = int(height * (3/4))
+        new_width = int(height * (3 / 4))
         start_x = int((width - new_width) / 2)
-        image = image[:, start_x:start_x+new_width]
-        cv2.imwrite(SAMPLE_IMAGE_PATH + 'crop.jpg', image)
+        image = image[:, start_x : start_x + new_width]
+        cv2.imwrite(SAMPLE_IMAGE_PATH + "crop.jpg", image)
     image_bbox = model_test.get_bbox(image)
     prediction = np.zeros((1, 3))
     test_speed = 0
@@ -52,7 +53,7 @@ def test(numpy_array, model_dir, device_id):
         start = time.time()
         print(model_name)
         prediction += model_test.predict(img, os.path.join(model_dir, model_name))
-        test_speed += time.time()-start
+        test_speed += time.time() - start
 
     # draw result of prediction
     label = np.argmax(prediction)
@@ -64,4 +65,8 @@ def get_sreenshot(img):
     1 - real
     0 - fake
     """
-    return test(img, 'D:/InnoHack/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models', 0)
+    return test(
+        img,
+        "D:/InnoHack/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models",
+        0,
+    )

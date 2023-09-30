@@ -29,21 +29,12 @@ function App() {
 
           // Выполните POST-запрос на сервер, отправив изображение в формате base64
           axios.post(URL+'/api/photo', {
-<<<<<<< HEAD
-            'photo': base64Image,
+            photo: base64Image,
           })
           .then(response => {
             const data= response.data
             localStorage.setItem('response', data.photo)
             setPicture(data.photo)
-=======
-            photo: base64Image,
-          })
-          .then(response => {
-            const data= response.data
-            localStorage.setItem('response', data.corection)
-            setPicture(data.corection)
->>>>>>> 5b6ca6f6f03a8bd50c22449ca291b16842183d83
             // console.log(data.id)
           })
           .catch(error => {
@@ -76,13 +67,8 @@ function App() {
             Использовать камеру
         
         </label>
-<<<<<<< HEAD
         <p className='mx-2'> {picture}</p>
         {/* <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/> */}
-=======
-        {/* <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/> */}
-       <p className='mx-2'> {picture}</p> 
->>>>>>> 5b6ca6f6f03a8bd50c22449ca291b16842183d83
       </div>
       
       {check&& <Face/>}

@@ -44,7 +44,6 @@ function Face() {
   const changeDraw = () => {
     setDraww((draww) => !draww);
   }
-  const URL= 'http://127.0.0.1:5000'
 
   const [imageSent, setImageSent] = useState(false);
   const captureImage = async () => {
@@ -59,28 +58,13 @@ function Face() {
   
     // Получаем данные с Canvas в формате base64
     const imageData = canvasElement.toDataURL('image/jpeg');
-<<<<<<< HEAD
-    
-    axios.post(URL+'/api/photo', {
-      'photo': imageData,
-    })
-    .then(response => {
-      const data= response.data
-      localStorage.setItem('response', data.photo)
-      setPicture(data.photo)
-      // console.log(data.id)
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-=======
     axios.post(URL+'/api/photo', {
             photo: imageData,
           })
           .then(response => {
             const data= response.data
-            localStorage.setItem('response', data.corection)
-            setPicture(data.corection)
+            localStorage.setItem('response', data.photo)
+            setPicture(data.photo)
             // console.log(data.id)
           })
           .catch(error => {
@@ -89,7 +73,6 @@ function Face() {
         
       
    
->>>>>>> 5b6ca6f6f03a8bd50c22449ca291b16842183d83
 
   };
 

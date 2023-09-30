@@ -1,4 +1,5 @@
 import torch
+
 # import facenet_pytorch
 import yaml
 from PIL import Image
@@ -11,11 +12,17 @@ import matplotlib.pyplot as plt
 from torchvision import transforms
 
 # # Создаем экземпляр MTCNN
-mtcnn = MTCNN(margin=20, thresholds=[0.6, 0.6, 0.6], keep_all=True, post_process=False, device='cpu')
+mtcnn = MTCNN(
+    margin=20,
+    thresholds=[0.6, 0.6, 0.6],
+    keep_all=True,
+    post_process=False,
+    device="cpu",
+)
 
 
 def get_numbers(img):
-    image = Image.open(img) #plt.imread()
+    image = Image.open(img)  # plt.imread()
     faces = mtcnn(image)
 
     return len(faces)
@@ -32,4 +39,3 @@ def get_numbers(img):
     # fig.show()
 
     # Вывод количества найденных лиц
-    
