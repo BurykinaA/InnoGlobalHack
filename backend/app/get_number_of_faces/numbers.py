@@ -14,7 +14,7 @@ from torchvision import transforms
 # # Создаем экземпляр MTCNN
 mtcnn = MTCNN(
     margin=20,
-    thresholds=[0.6, 0.6, 0.6],
+    thresholds=[0.7, 0.7, 0.7],
     keep_all=True,
     post_process=False,
     device="cpu",
@@ -24,6 +24,8 @@ mtcnn = MTCNN(
 def get_numbers(img):
     image = Image.open(img)  # plt.imread()
     faces = mtcnn(image)
+    if faces == None:
+        return 0
 
     return len(faces)
 

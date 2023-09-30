@@ -30,9 +30,18 @@ def test(numpy_array, model_dir, device_id):
     if result is False:
         height, width, channel = image.shape
         new_width = int(height * (3 / 4))
-        start_x = int((width - new_width) / 2)
-        image = image[:, start_x : start_x + new_width]
-        cv2.imwrite(SAMPLE_IMAGE_PATH + "crop.jpg", image)
+        
+        # Calculate the aspect ratio
+        aspect_ratio = width / height
+        
+        # Calculate the new dimensions
+        new_width = int(height * aspect_ratio)
+        new_height = height
+        
+        # Resize the image
+        image = cv2.resize(image, (new_width, new_height))
+        
+        cv2.imwrite(SAMPLE_IMAGE_PATH + "resize.jpg", image)
     image_bbox = model_test.get_bbox(image)
     prediction = np.zeros((1, 3))
     test_speed = 0
@@ -67,6 +76,6 @@ def get_sreenshot(img):
     """
     return test(
         img,
-        "D:/InnoHack/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models",
+        "/Users/kokosik/Documents/Git/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models",
         0,
     )

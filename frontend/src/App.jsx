@@ -11,47 +11,51 @@ import { PictureContext } from './context/context';
 const URL= 'http://127.0.0.1:5000'
 function App() {
   const [check, setCheck] = useState(false)
-  const [picture, setPicture] = useState('')
-  useEffect(()=>{
-    setPicture(localStorage.getItem('response'))
-  },[])
+  const [picture, setPicture] = useState([])
+  const [image, setImage] = useState([])
+
   const URL= 'http://127.0.0.1:5000'
 
-  const handlePost =  (event) => {
-    const selectedFile = event.target.files[0];
+  const base64ImagesArray = [];
 
-    if (selectedFile) {
-      const reader = new FileReader();
+const handlePost = (event) => {
+  const files = event.target.files;
 
-      reader.onload = async (e) => {
-       
-          const base64Image = e.target.result;
+  for (const file of files) {
+    const reader = new FileReader();
 
-          // Выполните POST-запрос на сервер, отправив изображение в формате base64
-          axios.post(URL+'/api/photo', {
-            photo: base64Image,
-          })
+    reader.onload = async (e) => {
+      const base64Image = e.target.result.split(',')[1];
+
+      base64ImagesArray.push({ photo: base64Image });
+      setImage(base64ImagesArray)
+      if (base64ImagesArray.length === files.length) {
+        // Выполните POST-запрос на сервер, отправив массив на сервер
+        axios.post(URL + '/api/photo',  base64ImagesArray)
           .then(response => {
-            const data= response.data
-            localStorage.setItem('response', data.photo)
-            setPicture(data.photo)
-            // console.log(data.id)
+            const data = response.data;
+            // setPicture(data)
+            setImage(data)
+            // Обработайте ответ от сервера, если необходимо
           })
           .catch(error => {
-              console.error('Error:', error);
+            console.error('Error:', error);
           });
-        
-      };
+      }
+    };
 
-      reader.readAsDataURL(selectedFile);
-    }
-  };
+    reader.readAsDataURL(file);
+  }
+};
+
+ 
  
   return (
     <PictureContext.Provider value={{picture, setPicture}}>
-<div className='w-[96%]  mx-auto p-2 '>
-      <div className="flex items-center my-3 ">
+<div className='w-[96%] relative  mx-auto p-2 '>
+      <div className="flex bg-neutral-800 fixed w-full items-center p-3 left-0 top-0">
       <FileInput
+      multiple
         className='w-full mr-5'
           id="file"
           onChange={handlePost}
@@ -61,17 +65,32 @@ function App() {
           onChange={(e)=>setCheck(e.target.checked)}
         />
         <label
-          className="flex min-w-max dark:text-white text-2xl"
+          className="flex min-w-max dark:text-white text-2xl ml-2"
           htmlFor="agree"
         >
             Использовать камеру
         
         </label>
-        <p className='mx-2'> {picture}</p>
+        </div>
+        <div>
+     
         {/* <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/> */}
       </div>
       
-      {check&& <Face/>}
+      {check
+      ?
+       <Face/>
+      :
+        (image.map(pic=>(
+          <div className='my-20'>
+          <p className='m-5 text-7xl'> {pic.log}</p>
+          <img className='inline-block object-cover ml-3 rounded-lg h-[960px] w-[960px]' src={'data:image/jpeg;base64,'+pic.photo}/>
+          </div>
+        
+        ))
+          
+        )
+      }
   </div>
     </PictureContext.Provider>
     

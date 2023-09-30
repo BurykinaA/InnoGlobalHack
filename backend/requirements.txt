@@ -3,29 +3,16 @@ requests
 flask-cors
 facenet-pytorch==2.5.2
 easydict==1.9
-numpy==1.17.0
+numpy>=1.19.3
 tqdm
-# torchvision==0.4.0
-# torch==1.2.0
-opencv_python
+# opencv_python
 Pillow==7.1.2
-tensorboardX==2.0s
-#  the famous library from Python 
-
+tensorboardX==2.0
 pandas
-os
-cv2
-matplotlib.pyplot
-
-
-pickle
-warnings
-
+opencv-python==4.5.1.48
+matplotlib
 seaborn
-
-sklearn
+scikit-learn
 torch
 torchvision  
-albumentations  
-# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved  output when you create a version using "Save & Run All" 
-# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
+git+https://github.com/albumentations-team/albumentations

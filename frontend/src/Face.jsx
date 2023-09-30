@@ -58,13 +58,11 @@ function Face() {
   
     // Получаем данные с Canvas в формате base64
     const imageData = canvasElement.toDataURL('image/jpeg');
-    axios.post(URL+'/api/photo', {
-            photo: imageData,
-          })
+    axios.post(URL+'/api/photo', [{photo: imageData.split(',')[1]}])
           .then(response => {
             const data= response.data
-            localStorage.setItem('response', data.photo)
-            setPicture(data.photo)
+            // localStorage.setItem('response', data.photo)
+            setPicture(data[0].log)
             // console.log(data.id)
           })
           .catch(error => {
@@ -219,7 +217,8 @@ useEffect(()=>{
   }, [])
 
   return ( 
-    <div className="w-[960px] m-auto mt-10"> 
+    <div className="w-[960px] m-auto mt-20"> 
+       <p className='m-5 text-7xl'> {picture}</p>
         При обнаружении лица на бек отправляется один кадр, не видеопоток.
     
       
