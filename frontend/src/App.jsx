@@ -8,7 +8,7 @@ import { PictureContext } from './context/context';
 
 
 
-
+const URL= 'http://127.0.0.1:5000'
 function App() {
   const [check, setCheck] = useState(false)
   const [picture, setPicture] = useState('')
@@ -28,13 +28,13 @@ function App() {
           const base64Image = e.target.result;
 
           // Выполните POST-запрос на сервер, отправив изображение в формате base64
-          axios.post('https://jsonplaceholder.typicode.com/posts', {
-            image: base64Image,
+          axios.post(URL+'/api/correct', {
+            search: 'base64Image',
           })
           .then(response => {
             const data= response.data
-            localStorage.setItem('response', data.image)
-            setPicture(data.image)
+            localStorage.setItem('response', data.corection)
+            setPicture(data.corection)
             // console.log(data.id)
           })
           .catch(error => {
@@ -67,7 +67,8 @@ function App() {
             Использовать камеру
         
         </label>
-        <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/>
+        {/* <img className='inline-block object-cover ml-3 rounded-lg h-[82px] w-[82px]' src={picture}/> */}
+       <p className='mx-2'> {picture}</p> 
       </div>
       
       {check&& <Face/>}
