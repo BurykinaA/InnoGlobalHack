@@ -20,11 +20,20 @@ def make_correction():
     image_io = io.BytesIO(image_bytes)
     image = Image.open(image_io)
     numpy_array = np.array(image)
+<<<<<<< HEAD
     if get_numbers(image_io) != 1:
         resp = {'photo': 'No face'}
     else:
         resp = {'photo': 'Real'} if get_sreenshot(numpy_array) else {'photo': 'Fake'}
 
     # resp = {'photo': 'Real'} if get_sreenshot(numpy_array) == 1 else {'photo': 'Fake'}
+=======
+    # if get_numbers(image_io) != 1:
+    #     resp = {'photo': 'No face'}
+    # else:
+    #     resp = {'photo': 'Real'} if get_sreenshot(numpy_array) else {'photo': 'Fake'}
+
+    resp = {'photo': 'Real'} if get_sreenshot(numpy_array) == 1 else {'photo': 'Fake'}
+>>>>>>> 5b6ca6f6f03a8bd50c22449ca291b16842183d83
 
     return make_response(resp)

@@ -25,6 +25,7 @@ import Toggle from "./components/Toggle";
 import { PictureContext } from "./context/context";
 
 function Face() {
+    const URL= 'http://127.0.0.1:5000'
     const {picture, setPicture}= useContext(PictureContext)
   const videoRef = useRef(null);
   const webcamRef = useRef(null);
@@ -58,6 +59,7 @@ function Face() {
   
     // Получаем данные с Canvas в формате base64
     const imageData = canvasElement.toDataURL('image/jpeg');
+<<<<<<< HEAD
     
     axios.post(URL+'/api/photo', {
       'photo': imageData,
@@ -71,6 +73,23 @@ function Face() {
     .catch(error => {
         console.error('Error:', error);
     });
+=======
+    axios.post(URL+'/api/photo', {
+            photo: imageData,
+          })
+          .then(response => {
+            const data= response.data
+            localStorage.setItem('response', data.corection)
+            setPicture(data.corection)
+            // console.log(data.id)
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+        
+      
+   
+>>>>>>> 5b6ca6f6f03a8bd50c22449ca291b16842183d83
 
   };
 
