@@ -25,17 +25,8 @@ MODEL_MAPPING = {
 
 class Detection:
     def __init__(self):
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        deploy = "resources\detection_model\deploy.prototxt"
-        absolute_path_deploy  = os.path.join(current_dir, deploy)
-
-        
-        # deploy = 'backend/app/screen_detecting/resources/detection_model/deploy.prototxt'
-        # caffemodel = r'D:\InnoHack\InnoGlobalHack\backend\app\screen_detecting\resources\detection_model\Widerface-RetinaFace.caffemodel'
-        # deploy = r'D:\InnoHack\InnoGlobalHack\backend\app\screen_detecting\resources\detection_model\deploy.prototxt'
-        
-        caffemodel = 'resources\detection_model\Widerface-RetinaFace.caffemodel'
-        absolute_path_caffemodel = os.path.join(current_dir, caffemodel)
+        deploy = r"D:\InnoHack\InnoGlobalHack\backend\app\screen_detecting\resources\detection_model\deploy.prototxt"
+        caffemodel = r"D:\InnoHack\InnoGlobalHack\backend\app\screen_detecting\resources\detection_model\Widerface-RetinaFace.caffemodel"
 
         self.detector = cv2.dnn.readNetFromCaffe(deploy, caffemodel)
         self.detector_confidence = 0.6
@@ -63,7 +54,11 @@ class Detection:
             out[max_conf_index, 5] * width,
             out[max_conf_index, 6] * height,
         )
-        bbox = [int(left), int(top), int(right - left + 1), int(bottom - top + 1)]
+        print(left, top, right, bottom)
+        try:
+            bbox = [int(left), int(top), int(right - left + 1), int(bottom - top + 1)]
+        except:
+            bbox = [0.,0.,0.,0.]
         return bbox
 
 
