@@ -23,36 +23,40 @@ def make_correction():
     data_list = request.json  # Теперь ожидаем список JSON объектов
     responses = []
 
+    
     for data in data_list:
         image_bytes = base64.b64decode(data["photo"])
-        image_io = io.BytesIO(image_bytes)
-        image = Image.open(image_io)
-        numpy_array = np.array(image)
-        cnt, tmp = get_numbers(image_io)
-        if cnt == 0:
-            resp = {"log": "empty", "photo": data["photo"], "name": data["name"]}
-        else:
-            print(tmp)
-            ans1 = get_score(numpy_array)
-            ans2 = get_sreenshot(numpy_array)
-            if check_gradient(numpy_array, 1000):
-                resp = {"log": "fake", "photo": data["photo"], "name": data["name"]}
+        try:
+            image_io = io.BytesIO(image_bytes)
+            image = Image.open(image_io)
+            numpy_array = np.array(image)
+            cnt, tmp = get_numbers(image_io)
+
+            if cnt == 0:
+                resp = {"log": "empty", "photo": data["photo"], "name": data["name"]}
             else:
-
-                if tmp >= 95:
-                    resp = {"log": "real", "photo": data["photo"], "name": data["name"]}
+                print(tmp)
+                ans1 = get_score(numpy_array)
+                ans2 = get_sreenshot(numpy_array)
+                if check_gradient(numpy_array, 1000):
+                    resp = {"log": "fake", "photo": data["photo"], "name": data["name"]}
                 else:
-                    if ans2 == 1:
-                        resp = {"log": "real", "photo": data["photo"], "name": data["name"]}
-                        
-                    if ans1 == 0: #без все много лучше
-                        resp = {"log": "fake", "photo": data["photo"], "name": data["name"]}
-                    
-                        
-                    
 
+                    if tmp >= 95:
+                        resp = {"log": "real", "photo": data["photo"], "name": data["name"]}
+                    else:
+                        if ans2 == 1:
+                            resp = {"log": "real", "photo": data["photo"], "name": data["name"]}
+      
+                        elif ans1 == 0: #без все много лучше
+                            resp = {"log": "fake", "photo": data["photo"], "name": data["name"]}
+                        else:
+                            resp = {"log": "fake", "photo": data["photo"], "name": data["name"]}
+        except:
+            resp = {"log": "empty", "photo": None, "name": data['name']} 
 
         responses.append(resp)
+        # responses = set(responses)
 
     return make_response(responses)
 

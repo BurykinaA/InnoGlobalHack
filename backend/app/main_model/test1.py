@@ -42,6 +42,8 @@ def get_score(X):
         probabilities = torch.nn.functional.softmax(outputs.data, dim=1)
         print(probabilities)
         # Если вероятность класса 0 меньше 0.8, присваиваем класс 1
-        predicted = (probabilities[:, 0] < 0.98).long()
+        predicted = (probabilities[:, 1] > 0.976).long()
+        print(probabilities[:, 1])
+        print(predicted)
 
     return 0 if predicted else 1
