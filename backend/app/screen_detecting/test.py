@@ -54,7 +54,7 @@ def test(numpy_array, model_dir, device_id):
             "scale": scale,
             "out_w": w_input,
             "out_h": h_input,
-            "crop": True,
+            "crop": False,
         }
         if scale is None:
             param["crop"] = False
@@ -74,8 +74,12 @@ def get_sreenshot(img):
     1 - real
     0 - fake
     """
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    relevant_path = "resources/anti_spoof_models"
+    path = os.path.join(current_dir, relevant_path)
     return test(
         img,
-        "/Users/kokosik/Documents/Git/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models",
+        # "/Users/kokosik/Documents/Git/InnoGlobalHack/backend/app/screen_detecting/resources/anti_spoof_models",
+        path, 
         0,
     )

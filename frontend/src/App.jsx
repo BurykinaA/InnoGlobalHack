@@ -26,8 +26,8 @@ const handlePost = (event) => {
 
     reader.onload = async (e) => {
       const base64Image = e.target.result.split(',')[1];
-
-      base64ImagesArray.push({ photo: base64Image });
+      const imageName = file.name;
+      base64ImagesArray.push({ name: imageName, photo: base64Image });
       setImage(base64ImagesArray)
       if (base64ImagesArray.length === files.length) {
         // Выполните POST-запрос на сервер, отправив массив на сервер
@@ -36,7 +36,16 @@ const handlePost = (event) => {
             const data = response.data;
             // setPicture(data)
             setImage(data)
-            // Обработайте ответ от сервера, если необходимо
+            console.log(data)
+            axios.post(URL+'/api/download', data, )
+            .then(response=>{
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'result.csv';//сюда имя
+              a.click();
+              window.URL.revokeObjectURL(url);
+              })
           })
           .catch(error => {
             console.error('Error:', error);
@@ -53,7 +62,7 @@ const handlePost = (event) => {
   return (
     <PictureContext.Provider value={{picture, setPicture}}>
 <div className='w-[96%] relative  mx-auto p-2 '>
-      <div className="flex bg-neutral-800 fixed w-full items-center p-3 left-0 top-0">
+      <div className="flex bg-neutral-600 fixed w-full items-center p-3 left-0 top-0">
       <FileInput
       multiple
         className='w-full mr-5'
@@ -65,7 +74,7 @@ const handlePost = (event) => {
           onChange={(e)=>setCheck(e.target.checked)}
         />
         <label
-          className="flex min-w-max dark:text-white text-2xl ml-2"
+          className="flex min-w-max text-white text-2xl ml-2"
           htmlFor="agree"
         >
             Использовать камеру
@@ -81,9 +90,9 @@ const handlePost = (event) => {
       ?
        <Face/>
       :
-        (image.map(pic=>(
+        (image.map((pic, index)=>(
           <div className='my-20'>
-          <p className='m-5 text-7xl'> {pic.log}</p>
+          <p className='m-5 text-7xl'>{index} {pic.log}</p>
           <img className='inline-block object-cover ml-3 rounded-lg h-[960px] w-[960px]' src={'data:image/jpeg;base64,'+pic.photo}/>
           </div>
         

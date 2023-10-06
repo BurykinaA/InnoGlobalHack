@@ -58,7 +58,7 @@ function Face() {
   
     // Получаем данные с Canvas в формате base64
     const imageData = canvasElement.toDataURL('image/jpeg');
-    axios.post(URL+'/api/photo', [{photo: imageData.split(',')[1]}])
+    axios.post(URL+'/api/cam', [{photo: imageData.split(',')[1]}])
           .then(response => {
             const data= response.data
             // localStorage.setItem('response', data.photo)

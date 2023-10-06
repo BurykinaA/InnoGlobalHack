@@ -1,4 +1,5 @@
 import torch
+from PIL import Image
 
 # import facenet_pytorch
 import yaml
@@ -13,8 +14,8 @@ from torchvision import transforms
 
 # # Создаем экземпляр MTCNN
 mtcnn = MTCNN(
-    margin=20,
-    thresholds=[0.7, 0.7, 0.7],
+    margin=0,
+    thresholds=[0.4, 0.4, 0.4],
     keep_all=True,
     post_process=False,
     device="cpu",
@@ -23,21 +24,14 @@ mtcnn = MTCNN(
 
 def get_numbers(img):
     image = Image.open(img)  # plt.imread()
-    faces = mtcnn(image)
-    if faces == None:
-        return 0
+    boxes, _ = mtcnn.detect(image)
 
-    return len(faces)
+    # Проверка, найдено ли хотя бы одно лицо
+    if boxes is not None:
+        face_area = sum([(x2 - x1) * (y2 - y1) for x1, y1, x2, y2 in boxes])
+        image_area = image.size[0] * image.size[1]
+        face_ratio = face_area / image_area * 100
+    else:
+        face_ratio = 0
 
-    # if len(faces) > 1:
-    #     fig, axes = plt.subplots(1, len(faces))
-    #     for face, ax in zip(faces, axes):
-    #         ax.imshow(face.permute(1, 2, 0).int().numpy())
-    #         ax.axis('off')
-    # elif len(faces != 0):
-    #     fig, ax = plt.subplots(1, 1)
-    #     ax.imshow(faces[0].permute(1, 2, 0).int().numpy())
-    #     ax.axis('off')
-    # fig.show()
-
-    # Вывод количества найденных лиц
+    return len(boxes) if boxes is not None else 0, face_ratio
