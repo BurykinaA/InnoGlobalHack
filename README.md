@@ -20,10 +20,8 @@
 [Ссылка на перезентацию с демонстрацией решения](https://docs.google.com/presentation/d/135gFnvXTuMY0s2Gx6RO2vu4_WM_sKIHk/edit?usp=sharing&ouid=113877914532993525052&rtpof=true&sd=true)
 
 ## Решение
-processing - обучение сети, получение датасета
-
-backend/app/main_model - первая модель
-
+processing - обучение сети, получение датасета \n
+backend/app/main_model - первая модель \n
 backend/app/screen_detecting - [вторая модель](https://github.com/minivision-ai/Silent-Face-Anti-Spoofing/)
 
 ![image](https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/851359f2-9678-48df-adbf-f6d39422c9bd)
