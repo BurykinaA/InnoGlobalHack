@@ -1,7 +1,6 @@
 # InnoGlobalHack
 --------------------
-## winner's solution on InnoGlobalHack
-https://media.innopolis.university/news/innoglobalhack-final/
+[winner's solution on InnoGlobalHack](https://media.innopolis.university/news/innoglobalhack-final/)
 
 ## Задача
 В настоящее время многие мобильные
@@ -18,7 +17,7 @@ https://media.innopolis.university/news/innoglobalhack-final/
 фотографию, получает вердикт. 
 
 ## Демо
-[Ссылка на перезентацию с демонстрацией решения] https://docs.google.com/presentation/d/135gFnvXTuMY0s2Gx6RO2vu4_WM_sKIHk/edit?usp=sharing&ouid=113877914532993525052&rtpof=true&sd=true
+[Ссылка на перезентацию с демонстрацией решения](https://docs.google.com/presentation/d/135gFnvXTuMY0s2Gx6RO2vu4_WM_sKIHk/edit?usp=sharing&ouid=113877914532993525052&rtpof=true&sd=true)
 
 ## Решение
 
