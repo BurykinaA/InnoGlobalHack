@@ -18,7 +18,7 @@ https://media.innopolis.university/news/innoglobalhack-final/
 фотографию, получает вердикт. 
 
 ## Демо
-[Ссылка на перезентацию с демонстрацией решения]([https://drive.google.com/file/d/1rIUbims1dzlzeDi3ESrsX6Ff2huoVPU1/view?usp=sharing](https://docs.google.com/presentation/d/135gFnvXTuMY0s2Gx6RO2vu4_WM_sKIHk/edit?usp=sharing&ouid=113877914532993525052&rtpof=true&sd=true))
+[Ссылка на перезентацию с демонстрацией решения] https://docs.google.com/presentation/d/135gFnvXTuMY0s2Gx6RO2vu4_WM_sKIHk/edit?usp=sharing&ouid=113877914532993525052&rtpof=true&sd=true
 
 ## Решение
 
