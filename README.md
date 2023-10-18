@@ -70,4 +70,5 @@ docker-compose down
 ## Мы в медиа
 
 https://habr.com/ru/companies/misis/articles/767384/
+
 https://m.gazeta.ru/amp/tech/news/2023/10/16/21512545.shtml
