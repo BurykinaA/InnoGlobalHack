@@ -66,3 +66,9 @@ http://localhost:5173
 docker-compose down
 ```
 Это завершит работу всех контейнеров, связанных с приложением.
+
+
+## Мы в медиа
+
+https://habr.com/ru/companies/misis/articles/767384/
+https://m.gazeta.ru/amp/tech/news/2023/10/16/21512545.shtml
