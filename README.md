@@ -25,7 +25,7 @@ backend/app/main_model - first model
 backend/app/screen_detecting - [second model](https://github.com/minivision-ai/Silent-Face-Anti-Spoofing/)  
 
 <p float="left">
-  <img src="https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/851359f2-9678-48df-adbf-f6d39422c9bd" width="300">
+  <img src="https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/851359f2-9678-48df-adbf-f6d39422c9bd" width="100">
   <img src="https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/bcb9e9b0-f875-4760-a399-37d9ca937e75" width="400">
 </p>
 
