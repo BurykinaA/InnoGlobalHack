@@ -38,8 +38,8 @@ This instruction will allow you to run the application using Docker on Linux and
 
 ### Step 1: Clone the repository
 ```bash
-git clone https://github.com/JokerEur/WebAccessibility.git
-cd WebAccessibility
+git clone https://github.com/BurykinaA/InnoGlobalHack.git
+cd InnoGlobalHack
 ```
 ### Step 2: Run Docker Compose
 #### Linux:
