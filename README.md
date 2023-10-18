@@ -24,7 +24,11 @@ processing - network training, obtaining a dataset
 backend/app/main_model - first model  
 backend/app/screen_detecting - [second model](https://github.com/minivision-ai/Silent-Face-Anti-Spoofing/)  
 
-![image](https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/851359f2-9678-48df-adbf-f6d39422c9bd)
+<p float="left">
+  <img src="https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/851359f2-9678-48df-adbf-f6d39422c9bd" width="400">
+  <img src="https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/bcb9e9b0-f875-4760-a399-37d9ca937e75" width="400">
+</p>
+
 
 
 ## Launching the application
