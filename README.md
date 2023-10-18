@@ -21,7 +21,9 @@
 
 ## Решение
 processing - обучение сети, получение датасета
+
 backend/app/main_model - первая модель
+
 backend/app/screen_detecting - [вторая модель](https://github.com/minivision-ai/Silent-Face-Anti-Spoofing/)
 
 ![image](https://github.com/BurykinaA/InnoGlobalHack/assets/92402616/851359f2-9678-48df-adbf-f6d39422c9bd)
