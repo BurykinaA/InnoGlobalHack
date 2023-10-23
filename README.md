@@ -1,6 +1,6 @@
 # InnoGlobalHack
 --------------------
-[winners solution on InnoGlobalHack](https://media.innopolis.university/news/innoglobalhack-final)
+[winners solution on InnoGlobalHack](https://media.innopolis.university/news/innoglobalhack-final/)
 
 ## Task
 Currently, many mobile
